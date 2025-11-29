@@ -14,12 +14,14 @@ func RouterInitialisation(server *gin.Engine) {
 	authenticate.POST( "/events", CreateEvents)
 	authenticate.DELETE( "/events/:id", deleteAnEvent)
 	authenticate.PUT("/events/:id", updateAnEvent)
+	authenticate.POST("/events/:id/register", registrationForAnEvent)
 
 
 	server.Handle("POST", "/signup", signUp)
 	server.Handle("POST", "/login", logIn)
 	server.Handle("GET", "/events", getEvents)
 	server.Handle("GET", "/events/:id", getAnEvent)
+	//server.Handle("POST", "/events/:id/register", registrationForAnEvent)
+	//sqlserver.Handle("DELETE", "/events/:id/register", cancellationForAnEvent)
 	
-
 }
