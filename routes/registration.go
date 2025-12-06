@@ -26,7 +26,7 @@ func registrationForAnEvent(context *gin.Context) {
 
 	err = models.RegisterForEvent(userid, eventID)
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H{"Message": "Not able to register user for event"})
+		context.JSON(http.StatusInternalServerError, gin.H{"Message": "internal server error"})
 		return
 	}
 
