@@ -32,3 +32,27 @@ func registrationForAnEvent(context *gin.Context) {
 
 	context.JSON(http.StatusCreated, gin.H{"Message": "User successfully registered for event"})
 }
+
+func cancellationForAnEvent(context *gin.Context) {
+	eventID, err := strconv.ParseInt(context.Param("id"), 10, 64)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"Message": "Invalid ID passed"})
+		return
+	}
+	_, err = models.GetEvent(eventID)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"Message": "No search event found"})
+	}
+	
+	userid:= context.GetInt64("userID")
+
+	err = models.CancelEvent(userid, eventID)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"Message": err})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{"Message": "User successfully cancelled from event"})
+}

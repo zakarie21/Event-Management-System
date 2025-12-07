@@ -36,7 +36,9 @@ func IsUserRegistered(userID int64, eventID int64) (bool, error) {
         userID, eventID,
     )
 
-	if err != nil {
+    defer rows.Close()
+	
+    if err != nil {
         return false, err
     }
 
@@ -49,4 +51,21 @@ func IsUserRegistered(userID int64, eventID int64) (bool, error) {
 
     // Row exists → registered
     return false, nil
+}
+
+func CancelEvent(userID int64, eventID int64) error {
+    userRegistered, _ := IsUserRegistered(userID, eventID)
+
+    if !userRegistered {
+        fmt.Println("user is not registered")
+        return errors.New("user is not registered for event")
+    }
+
+    deleteQuery := "DELETE FROM registration WHERE userId=? AND eventId=?"
+    _, err := db.DB.Exec(deleteQuery, userID, eventID)
+    if err != nil {
+        fmt.Println(err)
+        return errors.New("unable to cancel user for event")
+    }
+    return nil
 }

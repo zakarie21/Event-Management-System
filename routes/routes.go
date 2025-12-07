@@ -15,6 +15,7 @@ func RouterInitialisation(server *gin.Engine) {
 	authenticate.DELETE( "/events/:id", deleteAnEvent)
 	authenticate.PUT("/events/:id", updateAnEvent)
 	authenticate.POST("/events/:id/register", registrationForAnEvent)
+	authenticate.DELETE("/events/:id/register",cancellationForAnEvent)
 
 
 	server.Handle("POST", "/signup", signUp)

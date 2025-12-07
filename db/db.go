@@ -14,7 +14,7 @@ func InitDB() {
 		panic(err)
 	}
 	DB.SetMaxOpenConns(10)
-	DB.SetMaxIdleConns(5)
+	DB.SetMaxIdleConns(1)
 
 	CreateTable()
 }
